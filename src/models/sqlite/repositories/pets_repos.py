@@ -1,7 +1,8 @@
 from src.models.sqlite.entities.pets import PetsTable
 from sqlalchemy.orm.exc import NoResultFound
-class PetsRepos:
+from src.models.sqlite.interfaces.pets_repos import PetsReposInterface
 
+class PetsRepos(PetsReposInterface):
   def __init__(self, db_connection):
     self.__db_connection = db_connection
 
