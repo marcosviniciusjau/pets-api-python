@@ -1,7 +1,8 @@
+from src.controllers.interfaces.person_find_controller import PersonFindControllerInterface
 from src.models.sqlite.entities.people import PeopleTable
 from src.models.sqlite.interfaces.people_repos import PersonReposInterface
 import re
-class PersonFindController:
+class PersonFindController(PersonFindControllerInterface):
   def __init__(self, person_repos:PersonReposInterface) -> None:
     self.__person_repos = person_repos
 

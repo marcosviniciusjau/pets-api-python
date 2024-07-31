@@ -1,6 +1,7 @@
 from src.models.sqlite.interfaces.people_repos import PersonReposInterface
 import re
-class PersonCreateController:
+from .interfaces.person_create_controller import PersonCreateControllerInterface
+class PersonCreateController(PersonCreateControllerInterface):
   def __init__(self, person_repos:PersonReposInterface) -> None:
     self.__person_repos = person_repos
 
