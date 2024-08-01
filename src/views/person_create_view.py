@@ -1,6 +1,6 @@
 from src.controllers.interfaces.person_create_controller import PersonCreateControllerInterface
-from src.views.http_request import HttpRequest
-from src.views.http_response import HttpResponse
+from src.views.http_types.http_request import HttpRequest
+from src.views.http_types.http_response import HttpResponse
 from src.views.interfaces.view_interface import ViewInterface
 
 class PersonCreateView(ViewInterface):
