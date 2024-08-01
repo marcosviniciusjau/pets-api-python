@@ -1,32 +1,33 @@
-from src.controllers.interfaces.person_find_controller import PersonFindControllerInterface
-from src.models.sqlite.entities.people import PeopleTable
+from typing import Dict
 from src.models.sqlite.interfaces.people_repos import PeopleReposInterface
-import re
+from src.models.sqlite.entities.people import PeopleTable
+from .interfaces.person_find_controller import PersonFindControllerInterface
+
 class PersonFindController(PersonFindControllerInterface):
-  def __init__(self, person_repos:PeopleReposInterface) -> None:
-    self.__person_repos = person_repos
+    def __init__(self, people_repos: PeopleReposInterface) -> None:
+        self.__people_repos = people_repos
+    def find(self, person_id: int) -> Dict:
+        person = self.__find_person_in_db(person_id)
+        response = self.__format_response(person)
+        return response
 
-  def find(self, person_id: int) -> dict:
-    person = self.__find_in_db(person_id)
-    response = self.__format_response(person)
-    return response
-  
-  def find_in_db(self, person_id: int) -> PeopleTable:
-    person = self.__person_repos.get_person(person_id)
-    if not person:
-      raise Exception("Pessoa não encontrada")
-    return person
+    def __find_person_in_db(self, person_id: int) -> PeopleTable:
+        person = self.__people_repos.get_person(person_id)
+        if not person:
+            raise Exception("Pessoa nao encontrada!")
 
-  def __format_response(self, person: PeopleTable) -> dict:
-    return {
-      "data": {
-        "type": "Person",
-        "id": person.id,
-        "attributes": {
-          "first_name": person.first_name,
-          "last_name": person.last_name,
-          "pet_name": person.pet_name,
-          "pet_type": person.pet_type
+        return person
+
+    def __format_response(self, person: PeopleTable) -> Dict:
+        return {
+            "data": {
+                "type": "Person",
+                "count": 1,
+                "attributes": {
+                    "first_name": person.first_name,
+                    "last_name": person.last_name,
+                    "pet_name": person.pet_name,
+                    "pet_type": person.pet_type
+                }
+            }
         }
-      }
-    }
