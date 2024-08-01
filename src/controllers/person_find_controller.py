@@ -1,4 +1,5 @@
 from typing import Dict
+from src.errors.error_types.not_found import NotFound
 from src.models.sqlite.interfaces.people_repos import PeopleReposInterface
 from src.models.sqlite.entities.people import PeopleTable
 from .interfaces.person_find_controller import PersonFindControllerInterface
@@ -14,7 +15,7 @@ class PersonFindController(PersonFindControllerInterface):
     def __find_person_in_db(self, person_id: int) -> PeopleTable:
         person = self.__people_repos.get_person(person_id)
         if not person:
-            raise Exception("Pessoa nao encontrada!")
+            raise NotFound("Pessoa não encontrada!")
 
         return person
 

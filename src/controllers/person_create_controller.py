@@ -1,5 +1,6 @@
 from typing import Dict
 import re
+from src.errors.error_types.bad_request import BadRequest
 from src.models.sqlite.interfaces.people_repos import PeopleReposInterface
 from .interfaces.person_create_controller import PersonCreateControllerInterface
 
@@ -19,11 +20,10 @@ class PersonCreateController(PersonCreateControllerInterface):
         return formated_response
 
     def __validate_first_and_last_name(self, first_name: str, last_name: str) -> None:
-        # Expressão Regular para caracteres que nao sao letras
         non_valid_caracteres = re.compile(r'[^a-zA-Z]')
 
         if non_valid_caracteres.search(first_name) or non_valid_caracteres.search(last_name):
-            raise Exception("Nome da pessoa invalido!")
+            raise BadRequest("Nome da pessoa invalido!")
 
     def __insert_person(self, first_name: str, last_name: str, age: int, pet_id: int) -> None:
         self.__people_repos.insert_person(first_name, last_name, age, pet_id)
